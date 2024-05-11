@@ -16,4 +16,18 @@ async def register_user(
         register_user_request: RegisterUserTelegramRequest,
         users_controller: UsersController = Depends(ControllersFactory.get_users_controller)
 ) -> UserResponse:
-    pass
+    user = await users_controller.register_user(
+        register_user_request.telegram_id,
+        register_user_request.username,
+        register_user_request.first_name,
+        register_user_request.last_name,
+        register_user_request.phone_number
+    )
+    return user
+
+
+@users_router.post("/me")
+async def get_me(
+    current_user: User = Depends(get_current_user)
+) -> UserResponse:
+    return current_user

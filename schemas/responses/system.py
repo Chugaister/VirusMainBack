@@ -5,3 +5,7 @@ from typing import Optional
 
 class PongResponse(BaseModel):
     message: Optional[str] = Field(default="pong")
+
+
+class EntityCreated(BaseModel):
+    message: str

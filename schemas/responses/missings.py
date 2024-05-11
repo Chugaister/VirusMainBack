@@ -1,5 +1,6 @@
+from pydantic import Field
 from schemas.base.missings import MissingBase
 
 
 class MissingResponse(MissingBase):
-    pass
+    missing_id: int = Field(example=12345)

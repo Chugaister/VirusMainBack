@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from pydantic import Field
+from pydantic import HttpUrl
 from datetime import date
 from enum import Enum
 from typing import Optional
@@ -11,6 +12,7 @@ class Gender(str, Enum):
 
 
 class MissingBase(BaseModel):
+    source_url: HttpUrl = Field(example="https://wanted.mvs.gov.ua/searchbezvesti/")
     disappearance_date: date = Field(example="2024-05-11")
     disappearance_place: Optional[str] = Field(example="Донецька обл, Покровський район, с. Хапотронівка")
     latitude: Optional[float] = Field(example=49.829069)
