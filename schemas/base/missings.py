@@ -15,8 +15,6 @@ class MissingBase(BaseModel):
     source_url: HttpUrl = Field(example="https://wanted.mvs.gov.ua/searchbezvesti/")
     disappearance_date: date = Field(example="2024-05-11")
     disappearance_place: Optional[str] = Field(example="Донецька обл, Покровський район, с. Хапотронівка")
-    latitude: Optional[float] = Field(example=49.829069)
-    longitude: Optional[float] = Field(example=24.013829)
     surname: str = Field(example="Парасюк")
     name: str = Field(example="Микола")
     father_name: str = Field(example="Іванович")

@@ -1,19 +1,14 @@
 from fastapi import APIRouter
 from fastapi import Query
-from fastapi import UploadFile
-from fastapi import File
-from fastapi.responses import StreamingResponse
 from fastapi import Depends
 from typing import List
 from datetime import date
-from io import BytesIO
 
 from controllers.missings import MissingsController
 from controllers.factory import ControllersFactory
 from schemas.requests.missings import CreateMissingRequest
 from schemas.responses.missings import MissingResponse
 from schemas.responses.coincidences import CoincidenceResponse
-from schemas.responses.system import EntityCreated
 
 missings_router = APIRouter(tags=["Missing people adverts flow"])
 
@@ -49,30 +44,6 @@ async def get_missing_by_id(
 ) -> MissingResponse:
     missing = await missings_controller.get_missing_by_id(missing_id)
     return missing
-
-
-@missings_router.post("/{missing_id}/uploads")
-async def upload_photo(
-        missing_id: int,
-        media_type: str = Query(example="image/jpeg"),
-        file: UploadFile = File(),
-        missings_controller: MissingsController = Depends(ControllersFactory.get_missings_controller)
-) -> EntityCreated:
-    await missings_controller.upload_photo(
-        missing_id,
-        media_type,
-        await file.read()
-    )
-    return EntityCreated(message="Photo uploaded successfully")
-
-
-@missings_router.get("/{missing_id}/uploads")
-async def upload_photo(
-        missing_id: int,
-        missings_controller: MissingsController = Depends(ControllersFactory.get_missings_controller)
-) -> StreamingResponse:
-    photos = await missings_controller.get_photos(missing_id)
-    return StreamingResponse(content=BytesIO(photos[0].content), media_type=photos[0].media_type)
 
 
 @missings_router.get("/")

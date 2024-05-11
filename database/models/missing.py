@@ -5,6 +5,7 @@ from sqlalchemy import String
 from sqlalchemy import Enum
 from sqlalchemy import Date
 from sqlalchemy.orm import relationship
+from typing import List
 
 from database.base import Base
 from database.mixins.timestamp import TimestampMixin
@@ -37,4 +38,9 @@ class Missing(Base, TimestampMixin):
     latitude = Column(Float)
     longitude = Column(Float)
 
-    photos = relationship("Photo", back_populates="missing", lazy="selectin")
+    uploads = relationship("Upload", back_populates="missing", lazy="selectin")
+
+    @property
+    def upload_ids(self) -> List[int]:
+        return [upload.upload_id for upload in self.uploads]
+

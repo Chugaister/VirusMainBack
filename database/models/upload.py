@@ -9,10 +9,12 @@ from database.base import Base
 from database.mixins.timestamp import TimestampMixin
 
 
-class Photo(Base, TimestampMixin):
+class Upload(Base, TimestampMixin):
     __tablename__ = "photos"
-    photo_id = Column(Integer, primary_key=True)
-    missing_id = Column(Integer, ForeignKey("missings.missing_id"))
+    upload_id = Column(Integer, primary_key=True)
+    missing_id = Column(Integer, ForeignKey("missings.missing_id"), unique=True)
+    coincidence_id = Column(Integer, ForeignKey("coincidences.coincidence_id"), unique=True)
     media_type = Column(String, nullable=False)
     content = Column(BYTEA, nullable=False)
-    missing = relationship("Missing", back_populates="photos")
+    missing = relationship("Missing", back_populates="uploads")
+    coincidence = relationship("Coincidence", back_populates="uploads")
