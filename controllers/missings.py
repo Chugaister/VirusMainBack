@@ -110,3 +110,7 @@ class MissingsController(BaseController):
             raise NotFoundException("Uploads not found")
         return missing.photos
 
+    async def find_missing(self, surname: str, date_of_birth: date) -> List[Missing]:
+        missings = await self.missings_repo.search(self.session, surname, date_of_birth)
+        return missings
+

@@ -80,9 +80,14 @@ async def find_missing(
         surname: str = Query(example="Парасюк"),
         name: str = Query(example="Микола"),
         father_name: str = Query(example="Іванович"),
-        date_of_birth: date = Query(example="2024-05-11")
+        date_of_birth: date = Query(example="2024-05-11"),
+        missings_controller: MissingsController = Depends(ControllersFactory.get_missings_controller)
 ) -> List[MissingResponse]:
-    pass
+    missings = await missings_controller.find_missing(
+        surname,
+        date_of_birth
+    )
+    return missings
 
 
 @missings_router.get("/search/{missing_id}")
