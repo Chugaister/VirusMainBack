@@ -1,0 +1,8 @@
+uvicorn~=0.29.0
+fastapi~=0.110.2
+pydantic~=2.7.1
+SQLAlchemy~=2.0.29
+asyncpg~=0.29.0
+python-dotenv~=1.0.1
+PyJWT~=2.8.0
+python-dotenv~=1.0.1
