@@ -4,6 +4,8 @@ from sqlalchemy import String
 from sqlalchemy import Integer
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import BYTEA
+from sqlalchemy.dialects.postgresql import ARRAY
+from sqlalchemy.dialects.postgresql import FLOAT
 
 from database.base import Base
 from database.mixins.timestamp import TimestampMixin
@@ -16,5 +18,6 @@ class Upload(Base, TimestampMixin):
     coincidence_id = Column(Integer, ForeignKey("coincidences.coincidence_id"), unique=True)
     media_type = Column(String, nullable=False)
     content = Column(BYTEA, nullable=False)
+    embeddings = Column(ARRAY(FLOAT))
     missing = relationship("Missing", back_populates="uploads")
     coincidence = relationship("Coincidence", back_populates="uploads")

@@ -59,11 +59,3 @@ async def find_missing(
         date_of_birth
     )
     return missings
-
-
-@missings_router.get("/search/{missing_id}")
-async def search(
-        missing_id: int,
-        #missings_controller: MissingsController = Depends(ControllersFactory.get_missings_controller)
-) -> List[CoincidenceResponse]:
-    pass

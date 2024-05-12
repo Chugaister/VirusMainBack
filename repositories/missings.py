@@ -18,3 +18,6 @@ class MissingsRepository(BaseRepository):
     ) -> List[Missing]:
         query = self.query().where(Missing.surname == surname).where(Missing.date_of_birth == date_of_birth)
         return await self.all(session, query)
+
+    async def seek_coincidences(self, missing_id):
+        pass

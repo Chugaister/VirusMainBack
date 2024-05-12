@@ -5,6 +5,7 @@ from controllers.base import BaseController
 from repositories.uploads import UploadsRepo
 from exceptions.base import NotFoundException
 from exceptions.base import BadRequestException
+from utils.facerecon import find_face_embeddings
 
 
 class UploadsController(BaseController):
@@ -20,12 +21,15 @@ class UploadsController(BaseController):
             media_type: str,
             content: bytes
     ) -> None:
+        embeddings = find_face_embeddings(content)
+        print(embeddings)
         await self.uploads_repo.create(
             self.session,
             attributes={
                 "missing_id": missing_id,
                 "coincidence_id": coincidence_id,
                 "media_type": media_type,
+                "embeddings": embeddings,
                 "content": content
             }
         )

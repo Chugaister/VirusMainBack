@@ -4,8 +4,8 @@ from typing import List
 
 from controllers.base import BaseController
 from repositories.missings import MissingsRepository
-from repositories.photos import PhotosRepository
 from database.models.missing import Missing
+from database.models.coincidence import Coincidence
 from database.models.upload import Upload
 from exceptions.base import NotFoundException
 from schemas.base.missings import Gender
@@ -78,4 +78,3 @@ class MissingsController(BaseController):
     async def find_missing(self, surname: str, date_of_birth: date) -> List[Missing]:
         missings = await self.missings_repo.search(self.session, surname, date_of_birth)
         return missings
-

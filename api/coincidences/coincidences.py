@@ -1,6 +1,7 @@
-
 from fastapi import APIRouter
 from fastapi import Depends
+from fastapi import Query
+from typing import List
 
 from controllers.missings import MissingsController
 from controllers.factory import ControllersFactory
@@ -22,3 +23,12 @@ async def create_coincidence(
         create_coincidence_request.date_published
     )
     return coincidence
+
+
+@coincidences_router.get("/search")
+async def seek_coincidences(
+        missing_id: int = Query(example=123),
+        coincidence_controller: CoincidencesController = Depends(ControllersFactory.get_concidences_controller)
+) -> List[CoincidenceResponse]:
+    coincidences = await coincidence_controller.seek(missing_id)
+    return coincidences
