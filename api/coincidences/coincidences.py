@@ -25,6 +25,14 @@ async def create_coincidence(
     return coincidence
 
 
+@coincidences_router.get("/")
+async def get_all_coincidences(
+        coincidence_controller: CoincidencesController = Depends(ControllersFactory.get_concidences_controller)
+) -> List[CoincidenceResponse]:
+    coincidences = await coincidence_controller.get_all()
+    return coincidences
+
+
 @coincidences_router.get("/search")
 async def seek_coincidences(
         missing_id: int = Query(example=123),

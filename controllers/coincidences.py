@@ -59,4 +59,8 @@ class CoincidencesController(BaseController):
         )
         return coincidences
 
+    async def get_all(self) -> List[Coincidence]:
+        coincidences = await self.coincidences_repo.get_all(self.session)
+        return coincidences
+
 
