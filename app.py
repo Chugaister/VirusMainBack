@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from api import router
 from time import time
 from exceptions.base import CustomException
@@ -26,6 +27,14 @@ def init_middlewares(app_: FastAPI) -> None:
         process_time = time() - start_time
         response.headers["X-Process-Time"] = str(process_time)
         return response
+
+    app_.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
 
 def create_app() -> FastAPI:
