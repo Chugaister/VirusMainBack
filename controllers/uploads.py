@@ -22,7 +22,6 @@ class UploadsController(BaseController):
             content: bytes
     ) -> None:
         embeddings = find_face_embeddings(content)
-        print(embeddings)
         await self.uploads_repo.create(
             self.session,
             attributes={
@@ -36,7 +35,8 @@ class UploadsController(BaseController):
         try:
             await self.session.commit()
         except IntegrityError:
-            raise BadRequestException("Unable to post an upload")
+            pass
+            # raise BadRequestException("Unable to post an upload")
 
     async def get_by_id(
             self,
