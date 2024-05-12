@@ -17,7 +17,7 @@ class CoincidencesRepo(BaseRepository):
         coincidences = await self.all(session, query)
         result = []
         for coincidence in coincidences:
-            if coincidence.uploads:
+            if coincidence.uploads and coincidence.uploads[0].embeddings:
                 is_same, accuracy = compare_faces(emb, coincidence.uploads[0].embeddings)
                 if is_same:
                     result.append((coincidence, accuracy))
