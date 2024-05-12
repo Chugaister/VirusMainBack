@@ -16,11 +16,12 @@ def compare_faces(emb1, emb2):
     emb1 = np.array(emb1)
     emb2 = np.array(emb2)
     is_same = face_recognition.compare_faces([emb1], emb2)[0]
+    accuracy = None
     if is_same:
         distance = face_recognition.face_distance([emb1], emb2)
         distance = round(distance[0] * 100)
         accuracy = 100 - round(distance)
-    return is_same
+    return is_same, accuracy
 
 
 if __name__ == "__main__":

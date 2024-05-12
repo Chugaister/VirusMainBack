@@ -17,8 +17,11 @@ class CoincidencesRepo(BaseRepository):
         coincidences = await self.all(session, query)
         result = []
         for coincidence in coincidences:
-            if coincidence.uploads and compare_faces(emb, coincidence.uploads[0].embeddings):
-                result.append(coincidence)
-        return result
+            if coincidence.uploads:
+                is_same, accuracy = compare_faces(emb, coincidence.uploads[0].embeddings)
+                if is_same:
+                    result.append((coincidence, accuracy))
+        result.sort(key=lambda x: x[1], reverse=True)
+        return [r[0] for r in result]
 
 
